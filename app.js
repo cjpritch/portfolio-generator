@@ -1,23 +1,26 @@
-// Required statement to use file system module 
-const fs = require('fs');
+const inquirer = require('inquirer');
+// const fs = require('fs');
+// const generatePage = require('./src/page-template.js')
 
-const generatePage = require('./src/page-template.js')
+// const pageHTML = generatePage(name, github);
 
-// Holds user command line arguments
-const profileDataArgs = process.argv.slice(2);
+// // Generate html file 
+// fs.writeFile('./index.html', pageHTML, err => {
+//   if (err) throw err;
 
-// Store arguments in variables 
-const [name, github] = profileDataArgs;
+//   console.log("Portfolio complete!");
+// });
 
-// Generate html file 
-fs.writeFile('./index.html', generatePage(name, github), err => {
-  if (err) throw new Error(err);
+inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: 'What is your name?'
+    }
+  ])
 
-  console.log("Portfolio complete!");
-});
-
-
-
+.then(answers => console.log(answers));
 
 
 
