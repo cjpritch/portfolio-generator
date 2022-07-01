@@ -1,15 +1,6 @@
 const inquirer = require('inquirer');
-// const fs = require('fs');
-// const generatePage = require('./src/page-template.js')
-
-// const pageHTML = generatePage(name, github);
-
-// // Generate html file 
-// fs.writeFile('./index.html', pageHTML, err => {
-//   if (err) throw err;
-
-//   console.log("Portfolio complete!");
-// });
+const fs = require('fs');
+const generatePage = require('./src/page-template.js')
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -73,7 +64,7 @@ if (!portfolioData.projects) {
   return inquirer.prompt([
     {
       type: 'input',
-      name: 'name',
+      name: 'projects',
       message: 'What is the name of your project? (Required)',
       validate: nameInput => {
         if (nameInput) {
@@ -142,7 +133,13 @@ if (!portfolioData.projects) {
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData);
+    const pageHTML = generatePage(portfolioData);
+
+     fs.writeFile('./index.html', pageHTML, err => {
+      if (err) throw new Error(err);
+
+       console.log('Page created! Check out index.html in this directory to see it!');
+     });
   });
 
 
